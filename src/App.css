@@ -1,24 +1,28 @@
-.App {
+html, body, #root, .App {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  width: 100%;
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+  pointer-events: none;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#sketch-container {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  display: flex;
+}
+
+iframe {
+  border: none;
+  flex: 1;
 }
