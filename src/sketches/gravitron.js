@@ -1,8 +1,8 @@
 import p5 from 'p5';
 
-export var sketch = (p) => {
+var gravitron = (p) => {
 
-
+  var centerPlanet;
   var planetArray;
   var indicator;
 
@@ -11,6 +11,8 @@ export var sketch = (p) => {
   var MIN_SIZE = 5;
   var MAX_SIZE = 100;
   var GROWTH_RATE = 1.2;
+
+  var colorPalette = ['#451804', '#c1440e', '#e77d11', '#fda600'];
 
   // function proj(v1, v2) {
   //   var dot = p.Vector.dot(v1, v2);
@@ -22,8 +24,11 @@ export var sketch = (p) => {
     this.location = p.createVector(x, y);
     this.radius = MIN_SIZE;
     this.growthRate = GROWTH_RATE;
+    this.randomColor = colorPalette[p.floor(p.random(colorPalette.length))];
     
     this.render = function() {
+      p.stroke(this.randomColor);
+      p.fill(this.randomColor);
       // Draw a line showing the initial force of the Planet
       p.line(p.mouseX, p.mouseY, this.location.x, this.location.y);
       
@@ -37,7 +42,7 @@ export var sketch = (p) => {
     
     this.release = function() {
       // Make a new Planet at this location
-      var planet = new Planet(this.location.x, this.location.y, this.radius);
+      var planet = new Planet(this.location.x, this.location.y, this.radius, this.randomColor);
       planetArray.push(planet);
       
       // Find the distance between this location and the mouse
@@ -49,11 +54,12 @@ export var sketch = (p) => {
     };
   }
 
-  function Planet(x, y, radius) {
+  function Planet(x, y, radius, color) {
     this.location     = p.createVector(x, y);
     this.velocity     = p.createVector(0, 0);
     this.acceleration = p.createVector(0, 0);
     this.radius       = radius;
+    this.color        = color;
     
     this.mass = function() {
       // Area = PI * r^2
@@ -83,6 +89,8 @@ export var sketch = (p) => {
     };
     
     this.render = function() {
+      p.stroke(this.color);
+      p.fill(this.color);
       p.ellipse(this.location.x, this.location.y, this.radius*2);
       this.velocity.add(this.acceleration);
       this.location.add(this.velocity);
@@ -92,22 +100,24 @@ export var sketch = (p) => {
 
 
   p.setup = () => {
-    p.createCanvas(800, 800);
+    p.createCanvas(p.windowWidth, p.windowHeight);
     planetArray = [];
+    centerPlanet = new Planet(p.windowWidth / 2, p.windowHeight / 2, 150, '#FDB813');
   };
   p.draw = () => {
     p.background(255, 255, 255, 50);
-    if (indicator) {
-      indicator.render();
-    }
-    
+    centerPlanet.render();
     for (var i = 0; i < planetArray.length; i++) {
+      centerPlanet.attract(planetArray[i]);
       planetArray[i].render();
       for (var j = 0; j < planetArray.length; j++) {
         if (i !== j) {
           planetArray[i].attract(planetArray[j]);
         }
       }
+    }
+    if (indicator) {
+      indicator.render();
     }
   };
   p.mousePressed = () => {
@@ -120,3 +130,5 @@ export var sketch = (p) => {
     }
   }
 }
+
+export default gravitron;
