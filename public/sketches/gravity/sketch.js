@@ -125,3 +125,8 @@ function mouseReleased() {
     indicator = null;
   }
 }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  centerPlanet.location.set(windowWidth / 2, windowHeight / 2);
+}

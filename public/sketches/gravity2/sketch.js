@@ -95,7 +95,7 @@ function Planet(x, y, radius, color) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   planetArray = [];
-  centerPlanet = new Planet(windowWidth / 2, windowHeight / 2, 150, 'blue');
+  centerPlanet = new Planet(windowWidth / 2, windowHeight / 2, 150, '#cccccc');
 };
 
 function draw() {
@@ -124,4 +124,9 @@ function mouseReleased() {
     indicator.release();
     indicator = null;
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  centerPlanet.location.set(windowWidth / 2, windowHeight / 2);
 }
