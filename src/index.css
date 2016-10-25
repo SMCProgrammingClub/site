@@ -3,3 +3,22 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+#sketch {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.info {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+}

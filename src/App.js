@@ -1,32 +1,56 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const sketches = ['gravity', 'gravity2'];
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sketch: 'gravity',
+  constructor() {
+    super();
+    // List with all sketches.
+    this.sketchList = {
+      gravity: {
+        name: 'Gravitron',
+        sketch: 'gravity',
+      }, 
+      gravity2: {
+        name: 'Other Sketch',
+        sketch: 'gravity2',
+      },
     };
+    const urlParam = window.location.search.substr(1);
+    // If the url parameter is invalid resort to the default sketch.
+    const queriedSketch = this.sketchList[urlParam] ? this.sketchList[urlParam] : this.sketchList['gravity'];
+    this.state = { currentSketch: queriedSketch }
+    this.changeSketch = this.changeSketch.bind(this);
   }
 
-  cycleSketch() {
-    const nextSketch = this.state.sketch === 'gravity' ? 'gravity2' : 'gravity';
-    this.setState({
-      sketch: nextSketch,
-    });
+  // Pressing the buttons changes the sketch for testing. We should implement some sort of carousel later.
+  changeSketch(sketch) {
+    if (window.location.search.substr(1) !== sketch) {
+      window.location.search = sketch;
+      const queriedSketch = this.sketchList[sketch] ? this.sketchList[sketch] : this.sketchList['gravity'];
+      this.setState({ currentSketch: queriedSketch })
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button onClick={this.cycleSketch.bind(this)}>Change sketch</button>
+        <div className="title">SMC Programming Club</div>
+        <div className="info">"{this.state.currentSketch.name}"</div>
+        <button
+          onClick={() => this.changeSketch('gravity')}
+          style={{ position: 'fixed', right: '2%', top: '2%' }}
+        >
+          Change to Gravity
+        </button>
+        <button
+          onClick={() => this.changeSketch('gravity2')}
+          style={{ position: 'fixed', right: '2%', top: '10%' }}
+        >
+          Change to Gravity2
+        </button>
         <div id="sketch-container">
-          <iframe id="sketch" src={`sketches/${this.state.sketch}`} scrolling="no"></iframe>
+          <iframe id="sketch" src={`sketches/${this.state.currentSketch.sketch}`} scrolling="no"></iframe>
         </div>
       </div>
     );
