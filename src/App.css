@@ -11,6 +11,10 @@ html, body, #root, .App {
   font-size: large;
 }
 
+button {
+  pointer-events: auto;
+}
+
 #sketch-container {
   pointer-events: auto;
   position: absolute;
