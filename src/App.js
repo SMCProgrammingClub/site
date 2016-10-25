@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-
 class App extends Component {
   constructor() {
     super();
@@ -16,7 +15,7 @@ class App extends Component {
         sketch: 'gravity2',
       },
     };
-    const urlParam = window.location.search.substr(1);
+    const urlParam = window.location.hash.substr(1);
     // If the url parameter is invalid resort to the default sketch.
     const queriedSketch = this.sketchList[urlParam] ? this.sketchList[urlParam] : this.sketchList['gravity'];
     this.state = { currentSketch: queriedSketch }
@@ -25,8 +24,8 @@ class App extends Component {
 
   // Pressing the buttons changes the sketch for testing. We should implement some sort of carousel later.
   changeSketch(sketch) {
-    if (window.location.search.substr(1) !== sketch) {
-      window.location.search = sketch;
+    if (window.location.hash.substr(1) !== sketch) {
+      window.location.hash = sketch;
       const queriedSketch = this.sketchList[sketch] ? this.sketchList[sketch] : this.sketchList['gravity'];
       this.setState({ currentSketch: queriedSketch })
     }

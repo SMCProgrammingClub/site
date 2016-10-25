@@ -1,3 +1,4 @@
+var centerPlanet;
 var planetArray;
 var indicator;
 
@@ -7,18 +8,23 @@ var MIN_SIZE = 5;
 var MAX_SIZE = 100;
 var GROWTH_RATE = 1.2;
 
-function proj(v1, v2) {
-  var dot = p5.Vector.dot(v1, v2);
-  var comp = dot / v2.magSq();
-  return p5.Vector.mult(v2, comp);
-}
+var colorPalette = ['blue', 'blue', 'blue', 'blue'];
+
+// function proj(v1, v2) {
+//   var dot = p.Vector.dot(v1, v2);
+//   var comp = dot / v2.magSq();
+//   return p.Vector.mult(v2, comp);
+// }
 
 function Indicator(x, y) {
   this.location = createVector(x, y);
   this.radius = MIN_SIZE;
   this.growthRate = GROWTH_RATE;
+  this.randomColor = colorPalette[floor(random(colorPalette.length))];
   
   this.render = function() {
+    stroke(this.randomColor);
+    fill(this.randomColor);
     // Draw a line showing the initial force of the Planet
     line(mouseX, mouseY, this.location.x, this.location.y);
     
@@ -32,7 +38,7 @@ function Indicator(x, y) {
   
   this.release = function() {
     // Make a new Planet at this location
-    var planet = new Planet(this.location.x, this.location.y, this.radius);
+    var planet = new Planet(this.location.x, this.location.y, this.radius, this.randomColor);
     planetArray.push(planet);
     
     // Find the distance between this location and the mouse
@@ -40,15 +46,15 @@ function Indicator(x, y) {
     var force = createVector(this.location.x - mouseX, this.location.y - mouseY);
     force.mult(10);
     planet.applyForce(force);
-    
   };
 }
 
-function Planet(x, y, radius) {
+function Planet(x, y, radius, color) {
   this.location     = createVector(x, y);
   this.velocity     = createVector(0, 0);
   this.acceleration = createVector(0, 0);
   this.radius       = radius;
+  this.color        = color;
   
   this.mass = function() {
     // Area = PI * r^2
@@ -63,7 +69,6 @@ function Planet(x, y, radius) {
   
   this.attract = function(otherPlanet) {
     var vectorBetween = p5.Vector.sub(this.location, otherPlanet.location);
-    
     var r  = vectorBetween.mag();
     var m1 = this.mass();
     var m2 = otherPlanet.mass();
@@ -72,19 +77,13 @@ function Planet(x, y, radius) {
       var force       = (G * m1 * m2) / pow(r, 2);
       var direction   = vectorBetween.normalize();
       var forceVector = p5.Vector.mult(direction, force);
-      
       otherPlanet.applyForce(forceVector);
     }
-//     else {
-//       var relativeVelocity = p5.Vector.sub(otherPlanet.velocity, this.velocity);
-//       // otherPlanet.velocity.add(this.proj(relativeVelocity, vectorBetween));
-      
-//       var projVelocity = proj(relativeVelocity, vectorBetween);
-//       this.velocity.add(projVelocity);
-//     }
   };
   
   this.render = function() {
+    stroke(this.color);
+    fill(this.color);
     ellipse(this.location.x, this.location.y, this.radius*2);
     this.velocity.add(this.acceleration);
     this.location.add(this.velocity);
@@ -96,15 +95,14 @@ function Planet(x, y, radius) {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   planetArray = [];
-}
+  centerPlanet = new Planet(windowWidth / 2, windowHeight / 2, 150, 'blue');
+};
 
 function draw() {
-  background(255, 205, 255, 50);
-  if (indicator) {
-    indicator.render();
-  }
-  
+  background(255, 255, 255, 50);
+  centerPlanet.render();
   for (var i = 0; i < planetArray.length; i++) {
+    centerPlanet.attract(planetArray[i]);
     planetArray[i].render();
     for (var j = 0; j < planetArray.length; j++) {
       if (i !== j) {
@@ -112,7 +110,10 @@ function draw() {
       }
     }
   }
-}
+  if (indicator) {
+    indicator.render();
+  }
+};
 
 function mousePressed() {
   indicator = new Indicator(mouseX, mouseY);
