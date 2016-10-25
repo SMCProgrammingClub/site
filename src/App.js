@@ -70,7 +70,16 @@ class App extends Component {
           <div className="title">SMC Programming Club</div>
           <div key={this.state.currentSketch.title} className="info">"{this.state.currentSketch.title}"</div>
           <div key={this.state.currentSketch.sketch} id="sketch-container">
-            <iframe id="sketch" src={`sketches/${this.state.currentSketch.sketch}`} scrolling="no"></iframe>
+            <iframe
+              id="sketch"
+              src={process.env.NODE_ENV !== 'production' ?
+                `${process.env.PUBLIC_URL}/sketches/${this.state.currentSketch.sketch}/`
+              :
+                `https://smcprogrammingclub.github.io/site/sketches/${this.state.currentSketch.sketch}/`
+              }
+              scrolling="no"
+            >
+            </iframe>
           </div>
           <div className="carousel-container">
             <Slider ref='slider' className="carousel" {...carouselSettings} afterChange={this.afterChange}>

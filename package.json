@@ -1,6 +1,6 @@
 {
   "name": "site",
-  "homepage": "http://smcprogrammingclub.github.io/site",
+  "homepage": "https://smcprogrammingclub.github.io/site",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
