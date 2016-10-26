@@ -89,17 +89,4 @@ class App extends Component {
   }
 }
 
-            /*
-            <iframe
-              id="sketch"
-              src={process.env.NODE_ENV !== 'production' ?
-                `${process.env.PUBLIC_URL}/sketches/${this.state.currentSketch.sketch}/`
-              :
-                `https://smcprogrammingclub.github.io/site/sketches/${this.state.currentSketch.sketch}/`
-              }
-              scrolling="no"
-            >
-            </iframe>
-            */
-
 export default App;
