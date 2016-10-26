@@ -15,14 +15,13 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-
     const urlParam = window.location.hash.substr(1);
     let queriedSketch = _.find(sketches, (s) => s.path === urlParam);
     // If the url parameter is invalid resort to a random sketch.
     if (!queriedSketch) {
       const randomNumber = Math.floor(Math.random() * sketches.length);
       queriedSketch = sketches[randomNumber];
-      window.location.hash = sketches.indexOf(queriedSketch);
+      window.location.hash = queriedSketch.path;
     }
     this.state = { currentSketch: queriedSketch }
   }
@@ -55,15 +54,18 @@ class App extends Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}
         >
-          {/** 
-          <div className="content">
-            <Slider>
-              <About />
-              <Projects />
-              <Team />
-              <Join />
-            </Slider>
-          </div>*/}
+          {
+            /*
+            <div className="content">
+              <Slider>
+                <About />
+                <Projects />
+                <Team />
+                <Join />
+              </Slider>
+            </div>
+            */
+          }
           <div className="title">SMC Programming Club</div>
           <div key={this.state.currentSketch.title} className="info">"{this.state.currentSketch.title}"</div>
           <div key={this.state.currentSketch.path} id="sketch-container">
@@ -87,8 +89,8 @@ class App extends Component {
   }
 }
 
-/*
-<iframe
+            /*
+            <iframe
               id="sketch"
               src={process.env.NODE_ENV !== 'production' ?
                 `${process.env.PUBLIC_URL}/sketches/${this.state.currentSketch.sketch}/`
@@ -98,6 +100,6 @@ class App extends Component {
               scrolling="no"
             >
             </iframe>
-*/
+            */
 
 export default App;
