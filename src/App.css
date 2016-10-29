@@ -1,7 +1,4 @@
 html, body, #root, .App {
-  position: fixed;
-  height: 100%;
-  width: 100%;
   text-align: center;
   pointer-events: none;
   margin: 0;
@@ -14,7 +11,6 @@ button {
 
 #sketch-container {
   pointer-events: auto;
-  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
