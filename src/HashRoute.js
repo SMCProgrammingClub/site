@@ -23,9 +23,9 @@ export const parseHash = (hash) => {
 
 /**
  * Creates a window hash URL describing the current state
- * @param  {object} params      - An object which may contain 'tab' and 'sketch' string properties
- * @param  {string} currentHash - (Optional) The current window hash
- * @return {string}             - A window hash string (eg: '#about?sketch=gravity')
+ * @param  {object} params        - An object which may contain 'tab' and 'sketch' string properties
+ * @param  {string} [currentHash] - The current window hash
+ * @return {string}               - A window hash string (eg: '#about?sketch=gravity')
  */
 export const createHash = (params, currentHash) => {
     const newParams = parseHash(currentHash);

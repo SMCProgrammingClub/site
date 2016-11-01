@@ -55,34 +55,33 @@ class App extends Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}
         >
-          {
-            /*
-            <div className="content">
-              <Slider>
-                <About />
-                <Projects />
-                <Team />
-                <Join />
-              </Slider>
-            </div>
-            */
-          }
-          <div className="title">SMC Programming Club</div>
-          <div key={this.state.sketch.title} className="info">"{this.state.sketch.title}"</div>
-          <div key={this.state.sketch.path} id="sketch-container">
-            <iframe
-              id="sketch"
-              src={`sketches/${this.state.sketch.path}/`}
-              scrolling="no"
-            >
-            </iframe>
+
+          <div className="content">
+            <div className="title">SMC Programming Club</div>
+            <Slider {...carouselSettings}>
+              <div><About /></div>
+              <div><Projects /></div>
+              <div><Team /></div>
+              <div><Join /></div>
+            </Slider>
           </div>
+
           <div className="carousel-container">
             <Slider ref='slider' className="carousel" {...carouselSettings} afterChange={this.afterSketchChange}>
               {
                 sketches.map((s) => <div key={s.path}><h3>{s.title}</h3></div>)
               }
             </Slider>
+          </div>
+          
+          <div id="sketch-container">
+            <div className="info">"{this.state.sketch.title}"</div>
+            <iframe
+              id="sketch"
+              src={`sketches/${this.state.sketch.path}/`}
+              scrolling="no"
+            >
+            </iframe>
           </div>
         </ReactCSSTransitionGroup>
       </div>
