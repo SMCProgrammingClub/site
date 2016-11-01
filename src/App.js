@@ -10,30 +10,31 @@ import Projects from './components/projects';
 import Team     from './components/team';
 import Join     from './components/join';
 import sketches from './sketches';
+import { parseHash, createHash } from './HashRoute';
 import './App.css';
 
 class App extends Component {
-  constructor() {
-    super();
-    const urlParam = window.location.hash.substr(1);
-    let queriedSketch = _.find(sketches, (s) => s.path === urlParam);
-    // If the url parameter is invalid resort to a random sketch.
+  constructor(props) {
+    super(props);
+
+    const urlParams = parseHash(window.location.hash);
+    let queriedSketch = _.find(sketches, (s) => s.path === urlParams.sketch);
+    // If the url parameter is invalid, resort to a random sketch.
     if (!queriedSketch) {
       const randomNumber = Math.floor(Math.random() * sketches.length);
       queriedSketch = sketches[randomNumber];
-      window.location.hash = queriedSketch.path;
     }
-    this.state = { currentSketch: queriedSketch }
+    this.state = { tab: urlParams.tab, sketch: queriedSketch };
   }
 
   afterSketchChange = (currentSlide) => {
     const nextSketch = sketches[currentSlide] || sketches[0];
-    window.location.hash = nextSketch.path;
-    this.setState({ currentSketch: nextSketch });
+    window.location.hash = createHash({ sketch: nextSketch.path }, window.location.hash);
+    this.setState({ sketch: nextSketch });
   }
 
   componentDidMount() {
-    this.refs.slider.slickGoTo(sketches.indexOf(this.state.currentSketch));
+    this.refs.slider.slickGoTo(sketches.indexOf(this.state.sketch));
   }
 
   render() {
@@ -67,11 +68,11 @@ class App extends Component {
             */
           }
           <div className="title">SMC Programming Club</div>
-          <div key={this.state.currentSketch.title} className="info">"{this.state.currentSketch.title}"</div>
-          <div key={this.state.currentSketch.path} id="sketch-container">
+          <div key={this.state.sketch.title} className="info">"{this.state.sketch.title}"</div>
+          <div key={this.state.sketch.path} id="sketch-container">
             <iframe
               id="sketch"
-              src={`sketches/${this.state.currentSketch.path}/`}
+              src={`sketches/${this.state.sketch.path}/`}
               scrolling="no"
             >
             </iframe>
