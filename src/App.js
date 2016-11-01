@@ -74,8 +74,7 @@ class App extends Component {
             </Slider>
           </div>
           
-          <div id="sketch-container">
-            <div className="info">"{this.state.sketch.title}"</div>
+          <div key={this.state.sketch.path} id="sketch-container">
             <iframe
               id="sketch"
               src={`sketches/${this.state.sketch.path}/`}
