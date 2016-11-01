@@ -1,0 +1,7 @@
+.about {
+    display: flex;
+}
+
+.about > p {
+    flex: 1;
+}
