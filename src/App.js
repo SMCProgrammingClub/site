@@ -48,16 +48,10 @@ class App extends Component {
     };
     return (
       <div className="App">
-        <ReactCSSTransitionGroup
-          transitionName="fade"
-          transitionAppear={true}
-          transitionAppearTimeout={500}
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
 
-          <div className="content">
-            <div className="title">SMC Programming Club</div>
+        <div className="content">
+          <div className="title">SMC Programming Club</div>
+          <div className="content-carousel">
             <Slider {...carouselSettings}>
               <div><About /></div>
               <div><Projects /></div>
@@ -65,15 +59,23 @@ class App extends Component {
               <div><Join /></div>
             </Slider>
           </div>
+        </div>
 
-          <div className="carousel-container">
-            <Slider ref='slider' className="carousel" {...carouselSettings} afterChange={this.afterSketchChange}>
-              {
-                sketches.map((s) => <div key={s.path}><h3>{s.title}</h3></div>)
-              }
-            </Slider>
-          </div>
+        <div className="carousel-container">
+          <Slider ref='slider' className="carousel" {...carouselSettings} afterChange={this.afterSketchChange}>
+            {
+              sketches.map((s) => <div key={s.path}><h3>{s.title}</h3></div>)
+            }
+          </Slider>
+        </div>
           
+        <ReactCSSTransitionGroup
+          transitionName="fade"
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
           <div key={this.state.sketch.path} id="sketch-container">
             <iframe
               id="sketch"
