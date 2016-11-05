@@ -61,8 +61,8 @@ class App extends Component {
           </div>
         </div>
 
-        <div className="carousel-container">
-          <Slider ref='slider' className="carousel" {...carouselSettings} afterChange={this.afterSketchChange}>
+        <div className="sketches-carousel">
+          <Slider ref="slider" {...carouselSettings} afterChange={this.afterSketchChange}>
             {
               sketches.map((s) => <div key={s.path}><h3>{s.title}</h3></div>)
             }
