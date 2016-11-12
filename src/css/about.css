@@ -1,5 +1,7 @@
 .about {
     display: flex;
+    height: 2  00px;
+    background-color: lightskyblue;
 }
 
 .about > p {

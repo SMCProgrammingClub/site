@@ -8,10 +8,11 @@ html, body, #root, .App {
   overflow: hidden;
 }
 
-* {
+/* react-slick docs say this is necessary, but removing it looks fine */
+/** {
   min-height: 0;
   min-width: 0;
-}
+}*/
 
 .App {
   display: flex;
