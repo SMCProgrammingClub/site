@@ -49,12 +49,15 @@ button {
   font-family: 'Montserrat Alternates', sans-serif;
 }
 
-.carousel-container {
+.sketches-carousel {
+  cursor: pointer;
   pointer-events: auto;
   position: fixed;
   bottom: 0;
-  width: 100%;
-  height: 17%;
+  text-align: center;
+  margin-left: 10%;
+  width: 80%;
+  height: 15vh;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -84,6 +87,10 @@ button {
   bottom: 0;
   right: 0;
   overflow: hidden;
+}
+
+.slick-prev::before, .slick-next::before {
+  color: grey;
 }
 
 .fade-enter {
