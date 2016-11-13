@@ -15,7 +15,7 @@ const Officer = ({ name, title, pic }) => (
 export default class Team extends Component {
   render() {
     let officers = []; // Test array
-    _.times(6, i => officers.push(<Officer key={i} />));
+    _.times(9, i => officers.push(<Officer key={i} />));
 
     return (
       <div className='team'>{ officers }</div>

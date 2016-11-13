@@ -1,9 +1,10 @@
 .team {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /*height: 100%;
-    overflow-y: hidden;*/
+    overflow-y: auto;
+    pointer-events: auto;
 
     background-color: lightcyan;
 }
@@ -14,11 +15,7 @@
     align-items: center;
 
     background-color: lawngreen;
-
-    /* Ensure 3 per row */
-    margin: 0 1% 0 1%;
-    width: 18%;
-    min-width: 96px;
+    min-width: 200px;
 }
 
 .officer > .name {

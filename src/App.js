@@ -9,6 +9,7 @@ import About    from './components/about';
 import Projects from './components/projects';
 import Team     from './components/team';
 import Join     from './components/join';
+import TabNav   from './components/tab-nav';
 import sketches from './sketches';
 import { parseHash, createHash } from './HashRoute';
 import './App.css';
@@ -33,6 +34,10 @@ class App extends Component {
     this.setState({ sketch: nextSketch });
   }
 
+  onChangeTab = (index) => {
+    this.setState({ tab: index });
+  }
+
   componentDidMount() {
     this.refs.slider.slickGoTo(sketches.indexOf(this.state.sketch));
   }
@@ -46,19 +51,18 @@ class App extends Component {
       slidesToShow: 1,
       slidesToScroll: 1
     };
+    const tabs = [
+      { title: 'About', Component: About },
+      { title: 'Projects', Component: Projects },
+      { title: 'Team', Component: Team },
+      { title: 'Join', Component: Join },
+    ];
     return (
       <div className="App">
 
         <div className="content">
           <div className="title">SMC Programming Club</div>
-          <div className="content-carousel">
-            <Slider {...carouselSettings}>
-              <div><About /></div>
-              <div><Projects /></div>
-              <div><Team /></div>
-              <div><Join /></div>
-            </Slider>
-          </div>
+          <TabNav onChange={this.onChangeTab} activeTab={this.state.tab || 0} tabs={tabs} />
         </div>
 
         <div className="sketches-carousel">
